@@ -1,5 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { Channel } from './channel.model';
+import { Channel, SeenStatus } from './channel.model';
+
+import { v4 as uuidv4 } from 'uuid';
 
 @Injectable()
 export class ChannelsService {
@@ -8,6 +10,20 @@ export class ChannelsService {
 
   getAllChannels(): Channel[] {
     return this.channels;
+  }
+
+  //create a new channel for youtube
+  createChannel(name: string, description: string): Channel {
+    const channel: Channel = {
+      id: uuidv4(),
+      name,
+      description,
+      status: SeenStatus.LOCKED,
+    };
+
+    //push it to the task array
+    this.channels.push(channel);
+    return channel;
   }
 }
 

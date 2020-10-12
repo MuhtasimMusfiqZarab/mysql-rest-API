@@ -1,19 +1,26 @@
+// export interface Channel {
+//   channel_url: string; //this is the id for the youtube channel
+//   socialblade_category: string;
+//   subscribers: number;
+//   location: string;
+//   bio_email: string;
+//   channel_name: string;
+//   describtion: string;
+//   instagram: string;
+//   twitter: string;
+//   facebook: string;
+//   tictok: string;
+//   pinterest: string;
+//   others: string;
+//   joined: string;
+//   views: number;
+//   //this is the status of the channel if it is previously seen
+//   status: SeenStatus;
+// }
 export interface Channel {
-  channel_url: string; //this is the id for the youtube channel
-  socialblade_category: string;
-  subscribers: number;
-  location: string;
-  bio_email: string;
-  channel_name: string;
-  describtion: string;
-  instagram: string;
-  twitter: string;
-  facebook: string;
-  tictok: string;
-  pinterest: string;
-  others: string;
-  joined: string;
-  views: number;
+  id: string; //this is the id for the youtube channel
+  name: string;
+  description: string;
   //this is the status of the channel if it is previously seen
   status: SeenStatus;
 }

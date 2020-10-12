@@ -1,4 +1,4 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Post, Body } from '@nestjs/common';
 import { ChannelsService } from './channels.service';
 import { Channel } from './channel.model';
 
@@ -11,10 +11,13 @@ export class ChannelsController {
     return this.channelsService.getAllChannels();
   }
 
-  //create a new channel for youtube
-  // createChannel(){
-
-  // }
+  @Post()
+  createChannel(
+    @Body('name') name: string,
+    @Body('description') description: string,
+  ): Channel {
+    return this.channelsService.createChannel(name, description);
+  }
 }
 
 //---------------------ALL ABOUT CONTROLLERS-------------------
