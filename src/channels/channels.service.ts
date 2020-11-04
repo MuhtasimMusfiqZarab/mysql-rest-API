@@ -2,18 +2,24 @@ import { Injectable } from '@nestjs/common';
 import { Channel, SeenStatus } from './channel.model';
 
 import { v4 as uuidv4 } from 'uuid';
+import { CreateChannelDto } from './dto/create-channel.dto';
 
+//this service can be injected(via dependency injection) into constructors as decorated as @Injectable
 @Injectable()
 export class ChannelsService {
   //this array is the property of this class
   private channels: Channel[] = [];
 
+  //return all the channels in the memory
   getAllChannels(): Channel[] {
     return this.channels;
   }
 
   //create a new channel for youtube
-  createChannel(name: string, description: string): Channel {
+  createChannel(createChannelDto: CreateChannelDto): Channel {
+    //destructuring items from dto
+    const { name, description } = createChannelDto;
+
     const channel: Channel = {
       id: uuidv4(),
       name,
@@ -23,6 +29,7 @@ export class ChannelsService {
 
     //push it to the task array
     this.channels.push(channel);
+    //good practice to always return a newly created resourse
     return channel;
   }
 }

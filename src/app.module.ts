@@ -10,3 +10,10 @@ export class AppModule {}
 
 // a module is defined by annotation a class with @module decorator
 //decorators provides metadata that nest js uses to organize the application structure
+
+///---------------Property inside a module-----------------
+// providers: array of providers to be available within the module via dependency injection
+ // controllers: Array of controllers to be instantiated  within the module
+ //exports: array of providers to export to other moduels
+ //imports: List of modules required by this modules. Any exported provider by these moduels will now be available in our module by dependency injection.
+ //

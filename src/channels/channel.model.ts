@@ -17,6 +17,11 @@
 //   //this is the status of the channel if it is previously seen
 //   status: SeenStatus;
 // }
+
+//we can define a model as a class or as an interface
+//Interface is TypeScript concept that simply inforces the shape of an object upon compilation
+//Thus After compulation, interfaces are not preserved as interface anymore
+
 export interface Channel {
   id: string; //this is the id for the youtube channel
   name: string;
@@ -30,6 +35,3 @@ export enum SeenStatus {
   LOCKED = 'LOCKED',
   UNLOCKED = 'UNLOCKED',
 }
-
-//Interface is TypeScript concept that simply inforces the shape of an object upon compilation
-//Thus After compulation, interfaces are not preserved as interface anymore
