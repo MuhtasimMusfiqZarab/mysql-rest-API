@@ -37,6 +37,11 @@ export class ChannelsService {
     //good practice to always return a newly created resourse
     return channel;
   }
+
+  //delete a single channel by id
+  deleteChannel(id: string): void {
+    this.channels = this.channels.filter(task => task.id !== id);
+  }
 }
 
 //------------Nest js Porviders-----------
