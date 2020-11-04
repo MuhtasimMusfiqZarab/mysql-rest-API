@@ -15,6 +15,11 @@ export class ChannelsService {
     return this.channels;
   }
 
+  //get a single channel by id
+  getChannelById(id: string): Channel {
+    return this.channels.find(channel => channel.id === id);
+  }
+
   //create a new channel for youtube
   createChannel(createChannelDto: CreateChannelDto): Channel {
     //destructuring items from dto

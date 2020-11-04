@@ -1,5 +1,5 @@
 // controller is responsible to handling incoming requests & return response to the client
-import { Controller, Get, Post, Body } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param } from '@nestjs/common';
 import { ChannelsService } from './channels.service';
 import { Channel } from './channel.model';
 import { CreateChannelDto } from './dto/create-channel.dto';
@@ -18,6 +18,12 @@ export class ChannelsController {
   @Get()
   getAllChannels(): Channel[] {
     return this.channelsService.getAllChannels();
+  }
+
+  //get task by id
+  @Get('/:id')
+  getChannelById(@Param('id') id: string): Channel {
+    return this.channelsService.getChannelById(id);
   }
 
   @Post()
