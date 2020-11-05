@@ -2,22 +2,11 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ChannelsModule } from './channels/channels.module';
+import { typeOrmConfig } from './config/typeorm.config';
 
 @Module({
   //importing all the separate modules here
-  imports: [
-    ChannelsModule,
-    TypeOrmModule.forRoot({
-      type: 'mysql',
-      host: 'vmi427508.contaboserver.net',
-      port: 3306,
-      username: 'root',
-      password: 'H4DvVLcxW5paef',
-      database: 'youtube',
-      entities: [],
-      synchronize: true,
-    }),
-  ],
+  imports: [ChannelsModule, TypeOrmModule.forRoot(typeOrmConfig)],
 })
 export class AppModule {}
 
