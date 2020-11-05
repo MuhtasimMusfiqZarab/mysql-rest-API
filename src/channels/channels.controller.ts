@@ -8,6 +8,8 @@ import {
   Delete,
   Patch,
   Query,
+  UsePipes,
+  ValidationPipe,
 } from '@nestjs/common';
 import { ChannelsService } from './channels.service';
 import { Channel, SeenStatus } from './channel.model';
@@ -42,6 +44,8 @@ export class ChannelsController {
   }
 
   @Post()
+  //we need to use validation pipe so that empty name & description is not provided
+  @UsePipes(ValidationPipe)
   createChannel(@Body() createChannelDto: CreateChannelDto): Channel {
     return this.channelsService.createChannel(createChannelDto);
   }
