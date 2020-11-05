@@ -29,7 +29,9 @@ export class ChannelsController {
   //handlers are simply methods (GET,POST, DELETE) within the controller class, decoated with decorators(@Get,@Post etc)
   //handlers  returns a response value as an HTTP response & return it to the client
   @Get()
-  getChannels(@Query() filterDto: GetChannelsFilterDto): Channel[] {
+  getChannels(
+    @Query(ValidationPipe) filterDto: GetChannelsFilterDto,
+  ): Channel[] {
     //check if query parameters have value in them & based on that execute the service
     if (Object.keys(filterDto).length) {
       return this.channelsService.getChannelsWithFilters(filterDto);
