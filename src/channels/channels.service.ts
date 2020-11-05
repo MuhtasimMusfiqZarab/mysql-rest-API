@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { Channel, SeenStatus } from './channel.model';
 
 import { v4 as uuidv4 } from 'uuid';
@@ -39,7 +39,12 @@ export class ChannelsService {
 
   //get a single channel by id
   getChannelById(id: string): Channel {
-    return this.channels.find(channel => channel.id === id);
+    const found = this.channels.find(channel => channel.id === id);
+    if (!found) {
+      //we throw an error without a catch block because nest js lets us do that without a catch block
+      throw new NotFoundException(`Channel with id ${id} not found!`);
+    }
+    return found;
   }
 
   //create a new channel for youtube
