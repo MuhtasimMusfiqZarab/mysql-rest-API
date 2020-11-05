@@ -42,6 +42,14 @@ export class ChannelsService {
   deleteChannel(id: string): void {
     this.channels = this.channels.filter(task => task.id !== id);
   }
+
+  //update specific task status
+  updateChannelStatus(id: string, status: SeenStatus): Channel {
+    //retrieve the channel by id
+    const channel = this.getChannelById(id);
+    channel.status = status;
+    return channel;
+  }
 }
 
 //------------Nest js Porviders-----------

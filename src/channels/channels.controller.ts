@@ -1,7 +1,15 @@
 // controller is responsible to handling incoming requests & return response to the client
-import { Controller, Get, Post, Body, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  Delete,
+  Patch,
+} from '@nestjs/common';
 import { ChannelsService } from './channels.service';
-import { Channel } from './channel.model';
+import { Channel, SeenStatus } from './channel.model';
 import { CreateChannelDto } from './dto/create-channel.dto';
 
 //controllers are bound by a specific path ('/channel' for channel resource )
@@ -34,6 +42,14 @@ export class ChannelsController {
   @Delete('/:id')
   deleteChannel(@Param('id') id: string): void {
     this.channelsService.deleteChannel(id);
+  }
+
+  @Patch('/:id/status')
+  updateChannelStatus(
+    @Param('id') id: string,
+    @Body('status') status: SeenStatus,
+  ): Channel {
+    return this.channelsService.updateChannelStatus(id, status);
   }
 }
 
