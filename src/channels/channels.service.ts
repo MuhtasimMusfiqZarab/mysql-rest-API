@@ -67,7 +67,9 @@ export class ChannelsService {
 
   //delete a single channel by id
   deleteChannel(id: string): void {
-    this.channels = this.channels.filter(task => task.id !== id);
+    //search for the channel with id if exists(used for handling not found exception)
+    const found = this.getChannelById(id);
+    this.channels = this.channels.filter(task => task.id !== found.id);
   }
 
   //update specific task status

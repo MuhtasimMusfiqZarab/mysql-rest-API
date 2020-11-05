@@ -15,6 +15,7 @@ import { ChannelsService } from './channels.service';
 import { Channel, SeenStatus } from './channel.model';
 import { CreateChannelDto } from './dto/create-channel.dto';
 import { GetChannelsFilterDto } from './dto/get-channel-filter.dto';
+import { ChannelStatusValidationPipe } from './pipes/channel-status-validation.pipe';
 
 //controllers are bound by a specific path ('/channel' for channel resource )
 // controller take advantage of ependency injection to consume providers within the same module
@@ -58,7 +59,8 @@ export class ChannelsController {
   @Patch('/:id/status')
   updateChannelStatus(
     @Param('id') id: string,
-    @Body('status') status: SeenStatus,
+    //for validation we can provide 2nd parameter to the Body decorator
+    @Body('status', ChannelStatusValidationPipe) status: SeenStatus,
   ): Channel {
     return this.channelsService.updateChannelStatus(id, status);
   }
