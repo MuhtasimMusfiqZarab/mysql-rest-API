@@ -7,10 +7,12 @@ import {
   Param,
   Delete,
   Patch,
+  Query,
 } from '@nestjs/common';
 import { ChannelsService } from './channels.service';
 import { Channel, SeenStatus } from './channel.model';
 import { CreateChannelDto } from './dto/create-channel.dto';
+import { GetChannelsFilterDto } from './dto/get-channel-filter.dto';
 
 //controllers are bound by a specific path ('/channel' for channel resource )
 // controller take advantage of ependency injection to consume providers within the same module
@@ -24,7 +26,12 @@ export class ChannelsController {
   //handlers are simply methods (GET,POST, DELETE) within the controller class, decoated with decorators(@Get,@Post etc)
   //handlers  returns a response value as an HTTP response & return it to the client
   @Get()
-  getAllChannels(): Channel[] {
+  getChannels(@Query() filterDto: GetChannelsFilterDto): Channel[] {
+    //check if query parameters have value in them & based on that execute the service
+    if (Object.keys(filterDto).length) {
+      return this.channelsService.getChannelsWithFilters(filterDto);
+    }
+    //else return all the channels
     return this.channelsService.getAllChannels();
   }
 

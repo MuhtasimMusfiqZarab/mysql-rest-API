@@ -3,6 +3,7 @@ import { Channel, SeenStatus } from './channel.model';
 
 import { v4 as uuidv4 } from 'uuid';
 import { CreateChannelDto } from './dto/create-channel.dto';
+import { GetChannelsFilterDto } from './dto/get-channel-filter.dto';
 
 //this service can be injected(via dependency injection) into constructors as decorated as @Injectable
 @Injectable()
@@ -13,6 +14,27 @@ export class ChannelsService {
   //return all the channels in the memory
   getAllChannels(): Channel[] {
     return this.channels;
+  }
+
+  //get channels with filters using query params
+  getChannelsWithFilters(filterDto: GetChannelsFilterDto): Channel[] {
+    //destruct the filter dto
+    const { status, search } = filterDto;
+
+    let channels = this.getAllChannels();
+
+    if (status) {
+      channels = channels.filter(channel => channel.status === status);
+    }
+    if (search) {
+      channels = channels.filter(
+        channel =>
+          channel.name.toLowerCase().includes(search.toLowerCase()) ||
+          channel.description.toLowerCase().includes(search.toLowerCase()),
+      );
+    }
+
+    return channels;
   }
 
   //get a single channel by id
