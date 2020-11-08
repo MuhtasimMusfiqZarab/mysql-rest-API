@@ -2,7 +2,7 @@
 //this is used to validate the body while updating the channel seen status (so that only UNLOCKED & LOCKED are send)
 
 import { PipeTransform, BadRequestException } from '@nestjs/common';
-import { SeenStatus } from '../channel.model';
+import { SeenStatus } from '../channel-status.enum';
 
 //custom pipe must implement PipeTransform interface
 export class ChannelStatusValidationPipe implements PipeTransform {

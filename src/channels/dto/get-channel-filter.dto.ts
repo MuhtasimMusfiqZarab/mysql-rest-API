@@ -1,4 +1,4 @@
-import { SeenStatus } from '../channel.model';
+import { SeenStatus } from '../channel-status.enum';
 import { IsOptional, IsIn, IsNotEmpty } from 'class-validator';
 
 export class GetChannelsFilterDto {

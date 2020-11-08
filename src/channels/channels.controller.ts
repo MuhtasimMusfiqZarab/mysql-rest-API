@@ -10,12 +10,13 @@ import {
   Query,
   UsePipes,
   ValidationPipe,
+  ParseIntPipe,
 } from '@nestjs/common';
 import { ChannelsService } from './channels.service';
-import { Channel, SeenStatus } from './channel.model';
 import { CreateChannelDto } from './dto/create-channel.dto';
 import { GetChannelsFilterDto } from './dto/get-channel-filter.dto';
 import { ChannelStatusValidationPipe } from './pipes/channel-status-validation.pipe';
+import { Channel } from './channel.entity';
 
 //controllers are bound by a specific path ('/channel' for channel resource )
 // controller take advantage of ependency injection to consume providers within the same module
@@ -28,44 +29,45 @@ export class ChannelsController {
   //controller contains handlers , which handles endpoints & Request methods (GET,POST..etc)
   //handlers are simply methods (GET,POST, DELETE) within the controller class, decoated with decorators(@Get,@Post etc)
   //handlers  returns a response value as an HTTP response & return it to the client
-  @Get()
-  getChannels(
-    @Query(ValidationPipe) filterDto: GetChannelsFilterDto,
-  ): Channel[] {
-    //check if query parameters have value in them & based on that execute the service
-    if (Object.keys(filterDto).length) {
-      return this.channelsService.getChannelsWithFilters(filterDto);
-    }
-    //else return all the channels
-    return this.channelsService.getAllChannels();
-  }
+  // @Get()
+  // getChannels(
+  //   @Query(ValidationPipe) filterDto: GetChannelsFilterDto,
+  // ): Channel[] {
+  //   //check if query parameters have value in them & based on that execute the service
+  //   if (Object.keys(filterDto).length) {
+  //     return this.channelsService.getChannelsWithFilters(filterDto);
+  //   }
+  //   //else return all the channels
+  //   return this.channelsService.getAllChannels();
+  // }
 
   //get task by id
   @Get('/:id')
-  getChannelById(@Param('id') id: string): Channel {
+  //parseInt pipe to validate if we are getting a number at run time
+  getChannelById(@Param('id', ParseIntPipe) id: number): Promise<Channel> {
     return this.channelsService.getChannelById(id);
   }
 
-  @Post()
-  //we need to use validation pipe so that empty name & description is not provided
-  @UsePipes(ValidationPipe)
-  createChannel(@Body() createChannelDto: CreateChannelDto): Channel {
-    return this.channelsService.createChannel(createChannelDto);
-  }
+  // @Post()
+  // //we need to use validation pipe so that empty name & description is not provided
+  // @UsePipes(ValidationPipe)
+  // createChannel(@Body() createChannelDto: CreateChannelDto): Channel {
+  //   return this.channelsService.createChannel(createChannelDto);
+  // }
 
-  @Delete('/:id')
-  deleteChannel(@Param('id') id: string): void {
-    this.channelsService.deleteChannel(id);
-  }
+  // @Delete('/:id')
+  // deleteChannel(@Param('id') id: string): void {
+  //   this.channelsService.deleteChannel(id);
+  // }
 
-  @Patch('/:id/status')
-  updateChannelStatus(
-    @Param('id') id: string,
-    //for validation we can provide 2nd parameter to the Body decorator
-    @Body('status', ChannelStatusValidationPipe) status: SeenStatus,
-  ): Channel {
-    return this.channelsService.updateChannelStatus(id, status);
-  }
+  // @Patch('/:id/status')
+  // updateChannelStatus(
+  //   @Param('id') id: string,
+  //   //for validation we can provide 2nd parameter to the Body decorator
+  //   @Body('status', ChannelStatusValidationPipe) status: SeenStatus,
+  // ): Channel {
+  //   return this.channelsService.updateChannelStatus(id, status);
+  // }
 }
 
 //---------------------ALL ABOUT CONTROLLERS-------------------

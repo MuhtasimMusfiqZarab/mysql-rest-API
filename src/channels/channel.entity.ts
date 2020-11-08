@@ -1,5 +1,5 @@
 import { BaseEntity, Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
-import { SeenStatus } from './channel.model';
+import { SeenStatus } from './channel-status.enum';
 
 //ENTITY naming should be in uppercase
 @Entity()

@@ -10,6 +10,6 @@ export const typeOrmConfig: TypeOrmModuleOptions = {
   database: 'youtube',
   //typeorm uses entities that tranlate to table into the databse(THis entities are saved in files).THis entities array tells typeorm which files should be translated to tables
   //here any file in the source folder ended with .entity.ts will be translated to tables by typeorm
-  entities: [__dirname + '/../**/*.entity.ts'],
+  entities: [__dirname + '/../**/*.entity.{js,ts}'],
   synchronize: true,
 };
