@@ -30,17 +30,12 @@ export class ChannelsController {
   //controller contains handlers , which handles endpoints & Request methods (GET,POST..etc)
   //handlers are simply methods (GET,POST, DELETE) within the controller class, decoated with decorators(@Get,@Post etc)
   //handlers  returns a response value as an HTTP response & return it to the client
-  // @Get()
-  // getChannels(
-  //   @Query(ValidationPipe) filterDto: GetChannelsFilterDto,
-  // ): Channel[] {
-  //   //check if query parameters have value in them & based on that execute the service
-  //   if (Object.keys(filterDto).length) {
-  //     return this.channelsService.getChannelsWithFilters(filterDto);
-  //   }
-  //   //else return all the channels
-  //   return this.channelsService.getAllChannels();
-  // }
+  @Get()
+  getChannels(
+    @Query(ValidationPipe) filterDto: GetChannelsFilterDto,
+  ): Promise<Channel[]> {
+    return this.channelsService.getChannels(filterDto);
+  }
 
   //get task by id
   @Get('/:id')

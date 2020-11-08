@@ -16,27 +16,10 @@ export class ChannelsService {
     private channelRepository: ChannelRepository,
   ) {}
 
-  // //return all the channels in the memory
-  // getAllChannels(): Channel[] {
-  //   return this.channels;
-  // }
-  // //get channels with filters using query params
-  // getChannelsWithFilters(filterDto: GetChannelsFilterDto): Channel[] {
-  //   //destruct the filter dto
-  //   const { status, search } = filterDto;
-  //   let channels = this.getAllChannels();
-  //   if (status) {
-  //     channels = channels.filter(channel => channel.status === status);
-  //   }
-  //   if (search) {
-  //     channels = channels.filter(
-  //       channel =>
-  //         channel.name.toLowerCase().includes(search.toLowerCase()) ||
-  //         channel.description.toLowerCase().includes(search.toLowerCase()),
-  //     );
-  //   }
-  //   return channels;
-  // }
+  //get channels
+  async getChannels(filterDto: GetChannelsFilterDto): Promise<Channel[]> {
+    return this.channelRepository.getChannels(filterDto);
+  }
 
   async getChannelById(id: number): Promise<Channel> {
     //find the t
