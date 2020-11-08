@@ -52,34 +52,25 @@ export class ChannelsService {
     return this.channelRepository.createChannel(createChannelDto);
   }
 
-  // //create a new channel for youtube
-  // createChannel(createChannelDto: CreateChannelDto): Channel {
-  //   //destructuring items from dto
-  //   const { name, description } = createChannelDto;
-  //   const channel: Channel = {
-  //     id: uuidv4(),
-  //     name,
-  //     description,
-  //     status: SeenStatus.LOCKED,
-  //   };
-  //   //push it to the task array
-  //   this.channels.push(channel);
-  //   //good practice to always return a newly created resourse
-  //   return channel;
-  // }
-  // //delete a single channel by id
-  // deleteChannel(id: string): void {
-  //   //search for the channel with id if exists(used for handling not found exception)
-  //   const found = this.getChannelById(id);
-  //   this.channels = this.channels.filter(task => task.id !== found.id);
-  // }
-  // //update specific task status
-  // updateChannelStatus(id: string, status: SeenStatus): Channel {
-  //   //retrieve the channel by id
-  //   const channel = this.getChannelById(id);
-  //   channel.status = status;
-  //   return channel;
-  // }
+  async deleteChannel(id: number): Promise<void> {
+    const result = await this.channelRepository.delete(id);
+
+    //check if any row is deleted
+    if (result.affected === 0) {
+      throw new NotFoundException(`Channel with id ${id} not found!`);
+    }
+  }
+
+  //update specific task status
+  async updateChannelStatus(id: number, status: SeenStatus): Promise<Channel> {
+    //retrieve the channel by id
+    const channel = await this.getChannelById(id);
+
+    channel.status = status;
+    await channel.save();
+
+    return channel;
+  }
 }
 
 //------------Nest js Porviders-----------

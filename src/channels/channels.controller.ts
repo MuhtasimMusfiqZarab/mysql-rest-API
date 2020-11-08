@@ -13,6 +13,7 @@ import {
   ParseIntPipe,
 } from '@nestjs/common';
 import { ChannelsService } from './channels.service';
+import { SeenStatus } from './channel-status.enum';
 import { CreateChannelDto } from './dto/create-channel.dto';
 import { GetChannelsFilterDto } from './dto/get-channel-filter.dto';
 import { ChannelStatusValidationPipe } from './pipes/channel-status-validation.pipe';
@@ -56,19 +57,19 @@ export class ChannelsController {
     return this.channelsService.createChannel(createChannelDto);
   }
 
-  // @Delete('/:id')
-  // deleteChannel(@Param('id') id: string): void {
-  //   this.channelsService.deleteChannel(id);
-  // }
+  @Delete('/:id')
+  deleteChannel(@Param('id', ParseIntPipe) id: number): Promise<void> {
+    return this.channelsService.deleteChannel(id);
+  }
 
-  // @Patch('/:id/status')
-  // updateChannelStatus(
-  //   @Param('id') id: string,
-  //   //for validation we can provide 2nd parameter to the Body decorator
-  //   @Body('status', ChannelStatusValidationPipe) status: SeenStatus,
-  // ): Channel {
-  //   return this.channelsService.updateChannelStatus(id, status);
-  // }
+  @Patch('/:id/status')
+  updateChannelStatus(
+    @Param('id', ParseIntPipe) id: number,
+    //for validation we can provide 2nd parameter to the Body decorator
+    @Body('status', ChannelStatusValidationPipe) status: SeenStatus,
+  ): Promise<Channel> {
+    return this.channelsService.updateChannelStatus(id, status);
+  }
 }
 
 //---------------------ALL ABOUT CONTROLLERS-------------------
