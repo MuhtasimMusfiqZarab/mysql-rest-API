@@ -48,12 +48,13 @@ export class ChannelsController {
     return this.channelsService.getChannelById(id);
   }
 
-  // @Post()
-  // //we need to use validation pipe so that empty name & description is not provided
-  // @UsePipes(ValidationPipe)
-  // createChannel(@Body() createChannelDto: CreateChannelDto): Channel {
-  //   return this.channelsService.createChannel(createChannelDto);
-  // }
+  //create a new task
+  @Post()
+  //we need to use validation pipe so that empty name & description is not provided
+  @UsePipes(ValidationPipe)
+  createChannel(@Body() createChannelDto: CreateChannelDto): Promise<Channel> {
+    return this.channelsService.createChannel(createChannelDto);
+  }
 
   // @Delete('/:id')
   // deleteChannel(@Param('id') id: string): void {

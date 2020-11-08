@@ -5,6 +5,7 @@ import { GetChannelsFilterDto } from './dto/get-channel-filter.dto';
 import { ChannelRepository } from './channel.repository';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Channel } from './channel.entity';
+import { SeenStatus } from './channel-status.enum';
 
 //this service can be injected(via dependency injection) into constructors as decorated as @Injectable
 @Injectable()
@@ -45,6 +46,22 @@ export class ChannelsService {
       throw new NotFoundException(`Channel with id ${id} not found!`);
     }
     return found;
+  }
+
+  async createChannel(createChannelDto: CreateChannelDto): Promise<Channel> {
+    //destructuring items from dto
+    const { name, description } = createChannelDto;
+
+    //create new instance of entity class
+    const channel = new Channel();
+    //assigning value
+    channel.name = name;
+    channel.description = description;
+    channel.status = SeenStatus.LOCKED;
+    //saving to the DB
+    await channel.save();
+
+    return channel;
   }
 
   // //create a new channel for youtube
