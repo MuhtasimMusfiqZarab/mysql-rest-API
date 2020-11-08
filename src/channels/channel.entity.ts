@@ -15,5 +15,5 @@ export class Channel extends BaseEntity {
   description: string;
 
   @Column()
-  status: SeenStatus.LOCKED;
+  status: SeenStatus;
 }
