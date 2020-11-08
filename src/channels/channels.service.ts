@@ -49,19 +49,7 @@ export class ChannelsService {
   }
 
   async createChannel(createChannelDto: CreateChannelDto): Promise<Channel> {
-    //destructuring items from dto
-    const { name, description } = createChannelDto;
-
-    //create new instance of entity class
-    const channel = new Channel();
-    //assigning value
-    channel.name = name;
-    channel.description = description;
-    channel.status = SeenStatus.LOCKED;
-    //saving to the DB
-    await channel.save();
-
-    return channel;
+    return this.channelRepository.createChannel(createChannelDto);
   }
 
   // //create a new channel for youtube
