@@ -3,7 +3,8 @@ import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 //configuration for database connection
 export const typeOrmConfig: TypeOrmModuleOptions = {
   type: 'mysql',
-  host: 'vmi427508.contaboserver.net',
+  // host: 'vmi427508.contaboserver.net',
+  host: 'localhost',
   port: 3306,
   username: 'root',
   password: 'H4DvVLcxW5paef',
