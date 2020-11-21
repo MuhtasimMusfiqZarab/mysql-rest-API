@@ -4,9 +4,11 @@ import {
   PrimaryGeneratedColumn,
   Column,
   Unique,
+  OneToMany,
 } from 'typeorm';
 
 import * as bcrypt from 'bcrypt';
+import { Channel } from 'src/channels/channel.entity';
 
 @Entity()
 @Unique(['username'])
@@ -22,6 +24,14 @@ export class User extends BaseEntity {
 
   @Column()
   salt: string;
+
+  //here is the onetomany relationship between user and channels it has
+  @OneToMany(
+    () => Channel,
+    channel => channel.user,
+    { eager: true },
+  )
+  channels: Channel[];
 
   //we would validate the password using a custom method for user entity
   async validatePassword(password: string): Promise<boolean> {
