@@ -11,6 +11,7 @@ import {
   UsePipes,
   ValidationPipe,
   ParseIntPipe,
+  UseGuards,
 } from '@nestjs/common';
 import { ChannelsService } from './channels.service';
 import { SeenStatus } from './channel-status.enum';
@@ -18,11 +19,13 @@ import { CreateChannelDto } from './dto/create-channel.dto';
 import { GetChannelsFilterDto } from './dto/get-channel-filter.dto';
 import { ChannelStatusValidationPipe } from './pipes/channel-status-validation.pipe';
 import { Channel } from './channel.entity';
+import { AuthGuard } from '@nestjs/passport';
 
 //controllers are bound by a specific path ('/channel' for channel resource )
 // controller take advantage of ependency injection to consume providers within the same module
 //controllers are defined using @Controller decorator, this decorator accepts a string which is the path to be handled by the controller
 @Controller('channels')
+@UseGuards(AuthGuard())
 export class ChannelsController {
   //we define the dependencies in the constructor of the class, nest js  will take care of the injection and it will be available as class property
   constructor(private channelsService: ChannelsService) {}
