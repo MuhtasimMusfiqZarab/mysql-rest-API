@@ -46,8 +46,11 @@ export class ChannelsController {
   //get task by id
   @Get('/:id')
   //parseInt pipe to validate if we are getting a number at run time
-  getChannelById(@Param('id', ParseIntPipe) id: number): Promise<Channel> {
-    return this.channelsService.getChannelById(id);
+  getChannelById(
+    @Param('id', ParseIntPipe) id: number,
+    @GetUser() user: User,
+  ): Promise<Channel> {
+    return this.channelsService.getChannelById(id, user);
   }
 
   //create a new task
@@ -62,8 +65,11 @@ export class ChannelsController {
   }
 
   @Delete('/:id')
-  deleteChannel(@Param('id', ParseIntPipe) id: number): Promise<void> {
-    return this.channelsService.deleteChannel(id);
+  deleteChannel(
+    @Param('id', ParseIntPipe) id: number,
+    @GetUser() user: User,
+  ): Promise<void> {
+    return this.channelsService.deleteChannel(id, user);
   }
 
   @Patch('/:id/status')
@@ -71,8 +77,9 @@ export class ChannelsController {
     @Param('id', ParseIntPipe) id: number,
     //for validation we can provide 2nd parameter to the Body decorator
     @Body('status', ChannelStatusValidationPipe) status: SeenStatus,
+    @GetUser() user: User,
   ): Promise<Channel> {
-    return this.channelsService.updateChannelStatus(id, status);
+    return this.channelsService.updateChannelStatus(id, status, user);
   }
 }
 

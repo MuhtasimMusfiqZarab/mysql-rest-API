@@ -25,9 +25,11 @@ export class ChannelsService {
     return this.channelRepository.getChannels(filterDto, user);
   }
 
-  async getChannelById(id: number): Promise<Channel> {
+  async getChannelById(id: number, user: User): Promise<Channel> {
     //find the t
-    const found = await this.channelRepository.findOne(id);
+    const found = await this.channelRepository.findOne({
+      where: { id, userId: user.id },
+    });
     if (!found) {
       //we throw an error without a catch block because nest js lets us do that without a catch block
       throw new NotFoundException(`Channel with id ${id} not found!`);
@@ -42,8 +44,8 @@ export class ChannelsService {
     return this.channelRepository.createChannel(createChannelDto, user);
   }
 
-  async deleteChannel(id: number): Promise<void> {
-    const result = await this.channelRepository.delete(id);
+  async deleteChannel(id: number, user: User): Promise<void> {
+    const result = await this.channelRepository.delete({ id, userId: user.id });
 
     //check if any row is deleted
     if (result.affected === 0) {
@@ -52,9 +54,13 @@ export class ChannelsService {
   }
 
   //update specific task status
-  async updateChannelStatus(id: number, status: SeenStatus): Promise<Channel> {
+  async updateChannelStatus(
+    id: number,
+    status: SeenStatus,
+    user: User,
+  ): Promise<Channel> {
     //retrieve the channel by id
-    const channel = await this.getChannelById(id);
+    const channel = await this.getChannelById(id, user);
 
     channel.status = status;
     await channel.save();
