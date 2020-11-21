@@ -31,4 +31,8 @@ export class Channel extends BaseEntity {
     { eager: false },
   )
   user: User;
+
+  //this userId will be autometically created by typeorm, but we also need to define it in our entity definition otherwise it will be stranger to mysql
+  @Column()
+  userId: number;
 }

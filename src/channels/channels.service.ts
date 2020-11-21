@@ -18,8 +18,11 @@ export class ChannelsService {
   ) {}
 
   //get channels
-  async getChannels(filterDto: GetChannelsFilterDto): Promise<Channel[]> {
-    return this.channelRepository.getChannels(filterDto);
+  async getChannels(
+    filterDto: GetChannelsFilterDto,
+    user: User,
+  ): Promise<Channel[]> {
+    return this.channelRepository.getChannels(filterDto, user);
   }
 
   async getChannelById(id: number): Promise<Channel> {

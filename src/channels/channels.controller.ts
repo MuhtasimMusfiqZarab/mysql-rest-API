@@ -38,8 +38,9 @@ export class ChannelsController {
   @Get()
   getChannels(
     @Query(ValidationPipe) filterDto: GetChannelsFilterDto,
+    @GetUser() user: User,
   ): Promise<Channel[]> {
-    return this.channelsService.getChannels(filterDto);
+    return this.channelsService.getChannels(filterDto, user);
   }
 
   //get task by id

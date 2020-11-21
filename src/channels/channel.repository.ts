@@ -12,16 +12,24 @@ import { User } from 'src/auth/user.entity';
 @EntityRepository(Channel)
 export class ChannelRepository extends Repository<Channel> {
   //get all the channels from DB
-  async getChannels(filterDto: GetChannelsFilterDto): Promise<Channel[]> {
+  async getChannels(
+    filterDto: GetChannelsFilterDto,
+    user: User,
+  ): Promise<Channel[]> {
     const { status, search } = filterDto;
 
     //we will be using query builder for filtering and getting the data(query builder is a method of repository)
     const query = this.createQueryBuilder('channel'); //coz channel is the table
 
+    //get the channels created by the logged in user
+    query.where('channel.userId= :userId', { userId: user.id });
+
     //we want to support both of the filtering.. so we are using andWhere or we would use where only if there is one single filter to apply
     if (status) {
       //here it provides where clause of the SQL query
-      query.andWhere('channel.status = :status', { status });
+      query.andWhere('channel.status = :status', {
+        status,
+      });
     }
 
     if (search) {

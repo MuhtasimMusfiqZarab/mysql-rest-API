@@ -1,3 +1,4 @@
+//this extracts the user from the req object which was injected by passport
 import { createParamDecorator, ExecutionContext } from '@nestjs/common';
 import { User } from './user.entity';
 
