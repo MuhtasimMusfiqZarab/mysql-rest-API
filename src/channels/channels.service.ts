@@ -6,6 +6,7 @@ import { ChannelRepository } from './channel.repository';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Channel } from './channel.entity';
 import { SeenStatus } from './channel-status.enum';
+import { User } from 'src/auth/user.entity';
 
 //this service can be injected(via dependency injection) into constructors as decorated as @Injectable
 @Injectable()
@@ -31,8 +32,11 @@ export class ChannelsService {
     return found;
   }
 
-  async createChannel(createChannelDto: CreateChannelDto): Promise<Channel> {
-    return this.channelRepository.createChannel(createChannelDto);
+  async createChannel(
+    createChannelDto: CreateChannelDto,
+    user: User,
+  ): Promise<Channel> {
+    return this.channelRepository.createChannel(createChannelDto, user);
   }
 
   async deleteChannel(id: number): Promise<void> {

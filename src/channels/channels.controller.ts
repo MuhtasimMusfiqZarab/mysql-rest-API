@@ -20,6 +20,8 @@ import { GetChannelsFilterDto } from './dto/get-channel-filter.dto';
 import { ChannelStatusValidationPipe } from './pipes/channel-status-validation.pipe';
 import { Channel } from './channel.entity';
 import { AuthGuard } from '@nestjs/passport';
+import { User } from 'src/auth/user.entity';
+import { GetUser } from 'src/auth/get-user.decorator';
 
 //controllers are bound by a specific path ('/channel' for channel resource )
 // controller take advantage of ependency injection to consume providers within the same module
@@ -51,8 +53,11 @@ export class ChannelsController {
   @Post()
   //we need to use validation pipe so that empty name & description is not provided
   @UsePipes(ValidationPipe)
-  createChannel(@Body() createChannelDto: CreateChannelDto): Promise<Channel> {
-    return this.channelsService.createChannel(createChannelDto);
+  createChannel(
+    @Body() createChannelDto: CreateChannelDto,
+    @GetUser() user: User,
+  ): Promise<Channel> {
+    return this.channelsService.createChannel(createChannelDto, user);
   }
 
   @Delete('/:id')

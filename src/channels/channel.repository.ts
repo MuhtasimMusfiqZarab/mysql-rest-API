@@ -6,6 +6,7 @@ import { Channel } from './channel.entity';
 import { CreateChannelDto } from './dto/create-channel.dto';
 import { SeenStatus } from './channel-status.enum';
 import { GetChannelsFilterDto } from './dto/get-channel-filter.dto';
+import { User } from 'src/auth/user.entity';
 
 //thus repository is called from the service
 @EntityRepository(Channel)
@@ -37,7 +38,10 @@ export class ChannelRepository extends Repository<Channel> {
   }
 
   //create a new channel in the DB
-  async createChannel(createChannelDto: CreateChannelDto): Promise<Channel> {
+  async createChannel(
+    createChannelDto: CreateChannelDto,
+    user: User,
+  ): Promise<Channel> {
     //destructuring items from dto
     const { name, description } = createChannelDto;
 
@@ -47,8 +51,15 @@ export class ChannelRepository extends Repository<Channel> {
     channel.name = name;
     channel.description = description;
     channel.status = SeenStatus.LOCKED;
+
+    //assigning the channel to user
+    channel.user = user;
+
     //saving to the DB
     await channel.save();
+
+    //delete the user from the response before sending it to the client
+    delete channel.user;
 
     return channel;
   }
